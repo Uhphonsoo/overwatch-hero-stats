@@ -1,0 +1,20 @@
+[project]
+name = "overwatch-hero-stats"
+version = "0.1.0"
+description = "Scrape Overwatch hero pick/win rates over time and plot trends"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+    "matplotlib>=3.8",
+]
+
+[project.scripts]
+ow-scrape = "overwatch_stats.cli_scrape:main"
+ow-plot = "overwatch_stats.cli_plot:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["overwatch_stats*"]
