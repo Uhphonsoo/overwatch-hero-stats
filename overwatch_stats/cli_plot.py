@@ -8,6 +8,7 @@ from pathlib import Path
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import mplcursors
 
 from . import filters as F
 from .storage import DEFAULT_DB_PATH, connect, query_series
@@ -88,6 +89,14 @@ def main(argv: list[str] | None = None) -> int:
         fig.savefig(args.out, dpi=120)
         print(f"Saved {args.out}")
     else:
+        cursor = mplcursors.cursor(hover=True)
+
+        @cursor.connect("add")
+        def on_add(sel):
+            hero = sel.artist.get_label()
+            sel.annotation.set_text(f"{hero}\n{sel.target[1]:.2f}%")
+            sel.annotation.get_bbox_patch().set(alpha=0.8)
+
         plt.show()
     return 0
 

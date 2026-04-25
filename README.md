@@ -11,16 +11,15 @@ The rates page server-renders its data: every row is embedded as a JSON string i
 Requires Python 3.10+.
 
 ```bash
-cd overwatch-hero-stats
 python3 -m venv .venv
 .venv/bin/pip install -e .
 ```
 
-This installs two CLI scripts: `ow-scrape` and `ow-plot`.
+This installs two CLI scripts: `.venv/bin/ow-scrape` and `.venv/bin/ow-plot`.
 
 ## Scrape
 
-`ow-scrape` takes one snapshot per filter combo and writes it to `data/rates.db`.
+`.venv/bin/ow-scrape` takes one snapshot per filter combo and writes it to `data/rates.db`.
 
 ```bash
 # single combo
@@ -32,23 +31,23 @@ This installs two CLI scripts: `ow-scrape` and `ow-plot`.
 
 Filter flags (defaults match the website's defaults):
 
-| Flag | Values | Default |
-| --- | --- | --- |
-| `--role` | `All`, `Tank`, `Damage`, `Support` | `All` |
-| `--input` | `PC`, `Console` | `PC` |
-| `--rq` | `0` (Quick Play), `2` (Competitive) | `2` |
-| `--tier` | `All`, `Bronze`, `Silver`, `Gold`, `Platinum`, `Diamond`, `Master`, `Grandmaster` | `All` |
-| `--map` | `all-maps` or any map slug (e.g. `kings-row`, `busan`) | `all-maps` |
-| `--region` | `Americas`, `Asia`, `Europe` | `Europe` |
-| `--all-regions` | scrape Americas + Asia + Europe (overrides `--region`) | off |
-| `--all-rqs` | scrape both Quick Play and Competitive (overrides `--rq`) | off |
-| `--db` | path to SQLite file | `data/rates.db` |
+| Flag            | Values                              | Default |
+| ---             | ---                                 | ---     |
+| `--role`        | `All`, `Tank`, `Damage`, `Support`  | `All`   |
+| `--input`       | `PC`, `Console`                     | `PC`    |
+| `--rq`          | `0` (Quick Play), `2` (Competitive) | `2`     |
+| `--tier`        | `All`, `Bronze`, `Silver`, `Gold`, `Platinum`, `Diamond`, `Master`, `Grandmaster`                                           | `All`   |
+| `--map`         | `all-maps` or any map slug (e.g. `kings-row`, `busan`)    | `all-maps` |
+| `--region`      | `Americas`, `Asia`, `Europe`                              | `Europe`   |
+| `--all-regions` | scrape Americas + Asia + Europe (overrides `--region`)    | off        |
+| `--all-rqs`     | scrape both Quick Play and Competitive (overrides `--rq`) | off     |
+| `--db`          | path to SQLite file                                      | `data/rates.db` |
 
 Snapshots are keyed by `(timestamp, hero, filter combo)`. Running the same combo at the same timestamp is idempotent; running it later appends a new point to the time series.
 
 ## Plot
 
-`ow-plot` queries the DB for snapshots matching a filter combo and draws pick/win rate over time.
+`.venv/bin/ow-plot` queries the DB for snapshots matching a filter combo and draws pick/win rate over time.
 
 ```bash
 # show interactively
@@ -75,7 +74,7 @@ If you ask for a filter combo you haven't scraped, you'll get `No data for this 
 
 ## Building history
 
-To build a time series, just run `ow-scrape` periodically. Two options:
+To build a time series, just run `.venv/bin/ow-scrape` periodically. Two options:
 
 **cron** (every 6 hours):
 
